@@ -2,19 +2,60 @@
 //
 
 #include <iostream>
+#include <vector>
+#include <list>
+#include <chrono>
+#include "Resource.h"
+#include "ListAndVector.h"
+
+template <typename Func>
+long long TimeFunc(Func f)
+{
+    auto begin = std::chrono::steady_clock::now();
+    f();
+    auto end = std::chrono::steady_clock::now();
+
+    return std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+}
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+#pragma region Vectors
+    /*std::vector<int> numbers{ 0, 1, 2 };
+    numbers.push_back(-2);
+    numbers[0] = 3;
+    int num = numbers[2];
+
+    for (int i : numbers)
+    {
+        std::cout << i << std::endl;
+    }
+
+    Resource r("local");
+    {
+        std::cout << "----------------------------" << std::endl;
+        std::vector<Resource> resources;
+        resources.push_back(r);
+        std::cout << "----------------------------" << std::endl;
+        resources.push_back(Resource("first"));
+        std::cout << "----------------------------" << std::endl;
+        resources.push_back(Resource("second"));
+    }*/
+#pragma endregion
+
+#pragma region Lists
+    int const size = 10'000;
+
+    std::vector<int> v;
+    v.push_back(0);
+
+    std::list<int> l;
+    l.push_back(0);
+
+    auto vectormilliseconds = TimeFunc([&]() {BuildVector(size, v); });
+    auto listmilliseconds = TimeFunc([&]() {BuildList(size, l); });
+#pragma endregion
+
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
