@@ -57,5 +57,12 @@ int main()
     auto listmilliseconds = TimeFunc([&]() {BuildList(size, l); });
 #pragma endregion
 
+#pragma region Lambdas
+    auto isOdd = [](int candidate) { return candidate % 2 != 0; };
+
+    bool is3Odd = isOdd(3);
+    bool is4Odd = isOdd(4);
+#pragma endregion
+
     return 0;
 }
